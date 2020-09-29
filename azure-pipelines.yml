@@ -5,11 +5,26 @@
 
 trigger:
 - master
+- develop
+- features/*
 
 pool:
   vmImage: 'windows-latest'
 
 container: mcr.microsoft.com/dotnet/core/sdk:3.0
+
+# Define variables
+variables:
+-template
+
+# Scheule to run
+schedules:
+-cron: "00 09 ** 1"
+displayname:"weekly Credscan build"
+branches:
+include:
+-master:
+always: true
 
 steps:
 - task: DotNetCoreCLI@2
